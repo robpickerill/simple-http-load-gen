@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag chamodshehanka/node-test:$(date +%s)
+      run: docker build . --tag robpickerill/simple-http-load-gen
       
     - name: Docker Push
-      run: docker push chamodshehanka/node-test
+      run: docker push robpickerill/simple-http-load-gen
