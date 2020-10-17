@@ -38,7 +38,7 @@ func main() {
 					log.Printf("HTTP request inflight to %s", *url)
 					r, err := client.Get(*url)
 					if err != nil {
-						log.Println(err)
+						log.Printf("ERROR: %s", err)
 					} else {
 						log.Printf("Succesfully received data from: %s, with HTTP: %d", *url, r.StatusCode)
 					}
