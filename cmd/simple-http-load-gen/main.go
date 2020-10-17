@@ -39,8 +39,9 @@ func main() {
 					r, err := client.Get(*url)
 					if err != nil {
 						log.Println(err)
+					} else {
+						log.Printf("Succesfully received data from: %s, with HTTP: %d", *url, r.StatusCode)
 					}
-					log.Printf("Succesfully received data from: %s, with HTTP: %d", *url, r.StatusCode)
 					time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
 				}
 			}(ts)
