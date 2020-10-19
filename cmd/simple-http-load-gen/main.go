@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
@@ -14,6 +15,13 @@ func main() {
 	rampUpTime := flag.Int("rampup", 60, "Ramp up time in seconds")
 	url := flag.String("url", "https://www.google.com", "Destination URL")
 	flag.Parse()
+
+	log.Printf("spawning http listener")
+	http.HandleFunc("/status", httpStatus)
+	http.HandleFunc("/", httpHandler)
+	go func() {
+		http.ListenAndServe(":80", nil)
+	}()
 
 	waitTime := *rampUpTime / *threadCount
 
@@ -47,4 +55,12 @@ func main() {
 			}(ts)
 		}
 	}
+}
+
+func httpStatus(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "healthy")
+}
+
+func httpHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "order-processor")
 }
